@@ -7,11 +7,8 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-
     <style>
-        /* [स्टाइलिंग यहाँ है - वही आकर्षक गेमिंग स्टाइल जो आपको पसंद आई थी] */
+        /* [स्टाइलिंग - डिस्प्ले के लिए महत्वपूर्ण] */
         body { font-family: 'Arial', sans-serif; background-color: #1a1a2e; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; color: white; }
         .container { background-color: #21213e; padding: 40px; border-radius: 15px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); width: 380px; text-align: center; }
         .logo { width: 80px; height: 80px; background-color: #4b306e; border-radius: 50%; margin: 0 auto 20px; display: flex; justify-content: center; align-items: center; font-size: 30px; color: #ffcc00; border: 3px solid #ffcc00; }
@@ -33,7 +30,7 @@
     <div class="container">
         <div class="logo"><i class="fas fa-crown"></i></div>
         
-        <div id="register-view" class="hidden">
+        <div id="register-view"> 
             <h2>Register Your Account</h2>
             <form id="registration-form">
                 <div class="input-group">
@@ -86,12 +83,13 @@
         <div id="auth-message" class="auth-message"></div>
     </div>
 
+    <script src="https://firebasestorage.googleapis.com/v0/b/gemini-pro-us-central1-c1145.appspot.com/o/firebase-app-auth-local-v9.js?alt=media"></script>
+    
     <script>
         // ===========================================
-        // 1. FIREBASE कॉन्फ़िग और यूटिलिटी फ़ंक्शन्स
+        // 1. FIREBASE कॉन्फ़िग और इनिशियलाइज़ेशन
         // ===========================================
         const firebaseConfig = {
-          // 🟢 आपकी सही Firebase कॉन्फ़िग
           apiKey: "AIzaSyBENiVdiQfZa1RKiRereAx4YWyvQMr27Aw",
           authDomain: "game-data-79d88.firebaseapp.com",
           projectId: "game-data-79d88",
@@ -100,15 +98,11 @@
           appId: "1:311179311352:web:56fcac50687ada70f2e30d"
         };
 
-        // 🟢 Namespaced तरीके से इनिशियलाइज़ करें
         const app = firebase.initializeApp(firebaseConfig);
         const auth = app.auth(); 
         
         const DOMAIN_SUFFIX = "@mobileauth.com"; 
-
-        function getEmailFromMobile(mobileNumber) {
-            return mobileNumber + DOMAIN_SUFFIX;
-        }
+        function getEmailFromMobile(mobileNumber) { return mobileNumber + DOMAIN_SUFFIX; }
         
         function displayMessage(message, isError = true) {
             let messageElement = document.getElementById('auth-message');
@@ -124,33 +118,28 @@
         const registerView = document.getElementById('register-view');
         const loginView = document.getElementById('login-view');
         const dashboardView = document.getElementById('dashboard-view');
-        const messageElement = document.getElementById('auth-message');
-
+        
         function showRegister() {
             registerView.classList.remove('hidden');
             loginView.classList.add('hidden');
             dashboardView.classList.add('hidden');
-            messageElement.textContent = ''; 
-            document.getElementById('registration-form').reset();
+            displayMessage('', false);
         }
 
         function showLogin() {
             loginView.classList.remove('hidden');
             registerView.classList.add('hidden');
             dashboardView.classList.add('hidden');
-            messageElement.textContent = ''; 
-            document.getElementById('login-form').reset();
+            displayMessage('', false);
         }
         
         function showDashboard(user) {
             dashboardView.classList.remove('hidden');
             loginView.classList.add('hidden');
             registerView.classList.add('hidden');
-            messageElement.textContent = ''; 
             const name = user.displayName || user.email.split('@')[0];
             document.getElementById('welcome-message').textContent = `WELCOME, ${name.toUpperCase()}!`;
         }
-
 
         // ===========================================
         // 3. FIREBASE ऑथेंटिकेशन लॉजिक
@@ -174,7 +163,6 @@
             const email = getEmailFromMobile(mobile);
             
             try {
-                // 🟢 Namespaced API कॉल
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 await userCredential.user.updateProfile({ displayName: username });
                 
@@ -193,7 +181,7 @@
                 } else if (error.code === 'auth/network-request-failed') {
                     errorMessage = "❌ नेटवर्क त्रुटि। कृपया इंटरनेट जाँचें।";
                 } else {
-                    errorMessage = `❌ त्रुटि कोड: ${error.code}`; // अज्ञात त्रुटि कोड दिखाएँ
+                    errorMessage = `❌ त्रुटि कोड: ${error.code}`;
                 }
                 displayMessage(errorMessage);
             }
@@ -209,7 +197,6 @@
             const email = getEmailFromMobile(mobile); 
             
             try {
-                // 🟢 Namespaced API कॉल
                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
                 
                 displayMessage(`🎉 लॉगिन सफल!`, false);
@@ -240,13 +227,9 @@
             }
         }
         
-        // यूज़र की स्थिति पर नज़र रखना (पेज लोड होने पर)
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                showDashboard(user);
-            } else {
-                showRegister(); // शुरुआत में रजिस्ट्रेशन फ़ॉर्म दिखाएँ
-            }
+        // 4. पेज लोड होते ही कोड चलना सुनिश्चित करें
+        document.addEventListener('DOMContentLoaded', () => {
+             showRegister(); 
         });
         
     </script>
