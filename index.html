@@ -3,130 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>रजिस्ट्रेशन/लॉगिन - गेमिंग वेब</title>
+    <title>लॉगिन और रजिस्ट्रेशन - गेमिंग वेब</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 
     <style>
-        /* सामान्य स्टाइलिंग */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #1a1a2e; /* गहरा गेमिंग बैकग्राउंड रंग */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            color: white;
-        }
-
-        .container {
-            background-color: #21213e; 
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            width: 380px;
-            text-align: center;
-        }
-
-        /* लोगो और शीर्षक */
-        .logo {
-            width: 80px; height: 80px;
-            background-color: #4b306e; 
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 30px;
-            color: #ffcc00; 
-            border: 3px solid #ffcc00;
-        }
-        
-        h2 {
-            color: white;
-            margin-bottom: 30px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        /* इनपुट फ़ील्ड स्टाइल */
-        .input-group {
-            display: flex;
-            align-items: center;
-            background-color: #333355; 
-            border-radius: 25px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .input-group i {
-            padding: 15px;
-            color: #ffcc00;
-            font-size: 18px;
-            background-color: #4b306e; 
-            height: 100%;
-        }
-
-        .input-group input {
-            flex-grow: 1;
-            border: none;
-            padding: 15px 15px 15px 10px;
-            background: transparent;
-            color: white;
-            font-size: 16px;
-            outline: none;
-        }
-        
-        .input-group input::placeholder {
-            color: #aaaaaa;
-        }
-
-        /* बटन स्टाइल */
-        button {
-            width: 100%;
-            padding: 15px;
-            background-color: #7b2cbf; 
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #9d4edd; 
-        }
-        
-        /* लिंक और संदेश */
-        .switch-link {
-            margin-top: 25px;
-            font-size: 14px;
-        }
-
-        .switch-link a {
-            color: #ffcc00;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .auth-message {
-            margin-top: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        /* फ़ॉर्म छिपाने के लिए */
-        .hidden {
-            display: none;
-        }
+        /* [स्टाइलिंग यहाँ है - वही आकर्षक गेमिंग स्टाइल जो आपको पसंद आई थी] */
+        body { font-family: 'Arial', sans-serif; background-color: #1a1a2e; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; color: white; }
+        .container { background-color: #21213e; padding: 40px; border-radius: 15px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); width: 380px; text-align: center; }
+        .logo { width: 80px; height: 80px; background-color: #4b306e; border-radius: 50%; margin: 0 auto 20px; display: flex; justify-content: center; align-items: center; font-size: 30px; color: #ffcc00; border: 3px solid #ffcc00; }
+        h2 { color: white; margin-bottom: 30px; font-size: 24px; font-weight: bold; }
+        .input-group { display: flex; align-items: center; background-color: #333355; border-radius: 25px; margin-bottom: 20px; overflow: hidden; }
+        .input-group i { padding: 15px; color: #ffcc00; font-size: 18px; background-color: #4b306e; height: 100%; }
+        .input-group input { flex-grow: 1; border: none; padding: 15px 15px 15px 10px; background: transparent; color: white; font-size: 16px; outline: none; }
+        .input-group input::placeholder { color: #aaaaaa; }
+        button { width: 100%; padding: 15px; background-color: #7b2cbf; color: white; border: none; border-radius: 25px; cursor: pointer; font-size: 18px; font-weight: bold; margin-top: 10px; transition: background-color 0.3s; }
+        button:hover { background-color: #9d4edd; }
+        .switch-link { margin-top: 25px; font-size: 14px; }
+        .switch-link a { color: #ffcc00; text-decoration: none; font-weight: bold; cursor: pointer; }
+        .auth-message { margin-top: 20px; font-size: 14px; font-weight: bold; text-align: center; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -134,7 +33,7 @@
     <div class="container">
         <div class="logo"><i class="fas fa-crown"></i></div>
         
-        <div id="register-view">
+        <div id="register-view" class="hidden">
             <h2>Register Your Account</h2>
             <form id="registration-form">
                 <div class="input-group">
@@ -192,7 +91,7 @@
         // 1. FIREBASE कॉन्फ़िग और यूटिलिटी फ़ंक्शन्स
         // ===========================================
         const firebaseConfig = {
-          // आपकी Firebase कॉन्फ़िग
+          // 🟢 आपकी सही Firebase कॉन्फ़िग
           apiKey: "AIzaSyBENiVdiQfZa1RKiRereAx4YWyvQMr27Aw",
           authDomain: "game-data-79d88.firebaseapp.com",
           projectId: "game-data-79d88",
@@ -201,6 +100,7 @@
           appId: "1:311179311352:web:56fcac50687ada70f2e30d"
         };
 
+        // 🟢 Namespaced तरीके से इनिशियलाइज़ करें
         const app = firebase.initializeApp(firebaseConfig);
         const auth = app.auth(); 
         
@@ -219,7 +119,7 @@
         }
 
         // ===========================================
-        // 2. व्यू (फॉर्म) टॉगल करने के फ़ंक्शन्स
+        // 2. व्यू टॉगल करने के फ़ंक्शन्स
         // ===========================================
         const registerView = document.getElementById('register-view');
         const loginView = document.getElementById('login-view');
@@ -230,7 +130,7 @@
             registerView.classList.remove('hidden');
             loginView.classList.add('hidden');
             dashboardView.classList.add('hidden');
-            messageElement.textContent = ''; // संदेश साफ करें
+            messageElement.textContent = ''; 
             document.getElementById('registration-form').reset();
         }
 
@@ -238,7 +138,7 @@
             loginView.classList.remove('hidden');
             registerView.classList.add('hidden');
             dashboardView.classList.add('hidden');
-            messageElement.textContent = ''; // संदेश साफ करें
+            messageElement.textContent = ''; 
             document.getElementById('login-form').reset();
         }
         
@@ -246,8 +146,8 @@
             dashboardView.classList.remove('hidden');
             loginView.classList.add('hidden');
             registerView.classList.add('hidden');
-            messageElement.textContent = ''; // संदेश साफ करें
-            const name = user.displayName || user.email.split('@')[0]; // नाम या मोबाइल नंबर
+            messageElement.textContent = ''; 
+            const name = user.displayName || user.email.split('@')[0];
             document.getElementById('welcome-message').textContent = `WELCOME, ${name.toUpperCase()}!`;
         }
 
@@ -274,6 +174,7 @@
             const email = getEmailFromMobile(mobile);
             
             try {
+                // 🟢 Namespaced API कॉल
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 await userCredential.user.updateProfile({ displayName: username });
                 
@@ -282,12 +183,17 @@
 
             } catch (error) {
                 console.error("रजिस्ट्रेशन त्रुटि:", error);
-                let errorMessage = "रजिस्ट्रेशन में कोई समस्या आई।";
-
+                
+                let errorMessage = "❌ त्रुटि: कोई यूज़र नहीं बन पाया।";
+                
                 if (error.code === 'auth/email-already-in-use') {
                     errorMessage = "❌ यह मोबाइल नंबर पहले से ही पंजीकृत है।";
                 } else if (error.code === 'auth/weak-password') {
                     errorMessage = "❌ पासवर्ड बहुत कमज़ोर है (कम से कम 6 अक्षर चाहिए)।";
+                } else if (error.code === 'auth/network-request-failed') {
+                    errorMessage = "❌ नेटवर्क त्रुटि। कृपया इंटरनेट जाँचें।";
+                } else {
+                    errorMessage = `❌ त्रुटि कोड: ${error.code}`; // अज्ञात त्रुटि कोड दिखाएँ
                 }
                 displayMessage(errorMessage);
             }
@@ -303,6 +209,7 @@
             const email = getEmailFromMobile(mobile); 
             
             try {
+                // 🟢 Namespaced API कॉल
                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
                 
                 displayMessage(`🎉 लॉगिन सफल!`, false);
@@ -314,6 +221,8 @@
 
                 if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
                     errorMessage = "❌ गलत मोबाइल नंबर या पासवर्ड।";
+                } else if (error.code === 'auth/network-request-failed') {
+                    errorMessage = "❌ नेटवर्क त्रुटि। कृपया इंटरनेट जाँचें।";
                 }
                 displayMessage(errorMessage);
             }
@@ -336,7 +245,7 @@
             if (user) {
                 showDashboard(user);
             } else {
-                showLogin();
+                showRegister(); // शुरुआत में रजिस्ट्रेशन फ़ॉर्म दिखाएँ
             }
         });
         
