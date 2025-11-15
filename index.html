@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
-        /* [स्टाइलिंग - डिस्प्ले के लिए महत्वपूर्ण] */
         body { font-family: 'Arial', sans-serif; background-color: #1a1a2e; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; color: white; }
         .container { background-color: #21213e; padding: 40px; border-radius: 15px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); width: 380px; text-align: center; }
         .logo { width: 80px; height: 80px; background-color: #4b306e; border-radius: 50%; margin: 0 auto 20px; display: flex; justify-content: center; align-items: center; font-size: 30px; color: #ffcc00; border: 3px solid #ffcc00; }
@@ -83,7 +82,9 @@
         <div id="auth-message" class="auth-message"></div>
     </div>
 
-    <script src="https://firebasestorage.googleapis.com/v0/b/gemini-pro-us-central1-c1145.appspot.com/o/firebase-app-auth-local-v9.js?alt=media"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     
     <script>
         // ===========================================
@@ -93,13 +94,13 @@
           apiKey: "AIzaSyBENiVdiQfZa1RKiRereAx4YWyvQMr27Aw",
           authDomain: "game-data-79d88.firebaseapp.com",
           projectId: "game-data-79d88",
-          storageBucket: "game-data-79d88.firebasestorage.app",
+          storageBucket: "game-data-79d88.appspot.com",
           messagingSenderId: "311179311352",
           appId: "1:311179311352:web:56fcac50687ada70f2e30d"
         };
 
         const app = firebase.initializeApp(firebaseConfig);
-        const auth = app.auth(); 
+        const auth = firebase.auth(); 
         
         const DOMAIN_SUFFIX = "@mobileauth.com"; 
         function getEmailFromMobile(mobileNumber) { return mobileNumber + DOMAIN_SUFFIX; }
@@ -227,11 +228,10 @@
             }
         }
         
-        // 4. पेज लोड होते ही कोड चलना सुनिश्चित करें
         document.addEventListener('DOMContentLoaded', () => {
              showRegister(); 
         });
         
     </script>
 </body>
-</html>
+    </html>
